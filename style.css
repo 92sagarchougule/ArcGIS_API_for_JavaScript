@@ -8,7 +8,7 @@ html, body, #map {
   .esriPopup.dark div.titleButton, 
   .esriPopup.dark div.titlePane .title,
   .esriPopup.dark div.actionsPane .action {
-    color: #A4CE67;
+    color: #dadd08ef;
   }
   /* Additional customizations */
   .esriPopup.dark .esriPopupWrapper {
@@ -20,3 +20,5 @@ html, body, #map {
   .esriViewPopup .gallery {
     margin: 0 auto;
   }
+
+  

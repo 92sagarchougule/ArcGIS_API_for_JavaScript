@@ -45,8 +45,8 @@
     //   outFields: ["*"] //make sure field to label is specified here in outFields
     // });
     var template = new PopupTemplate({
-      title: "Boston Marathon 2013",
-      description: "{year_}:  {num_deaths} of starters finished",
+      title: "Earthquake",
+      description: "Year : {year_}:  {num_deaths} No of Deaths",
       fieldInfos: [{ //define field infos so we can specify an alias
         fieldName: "latitude",
         label: "Entrants"
