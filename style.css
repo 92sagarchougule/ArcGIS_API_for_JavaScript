@@ -3,3 +3,20 @@ html, body, #map {
     padding: 0;
     margin: 0;
   }
+
+  /* Change color of icons to match bar chart and selection symbol */
+  .esriPopup.dark div.titleButton, 
+  .esriPopup.dark div.titlePane .title,
+  .esriPopup.dark div.actionsPane .action {
+    color: #A4CE67;
+  }
+  /* Additional customizations */
+  .esriPopup.dark .esriPopupWrapper {
+    border: none;
+  }
+  .esriPopup .contentPane {
+    text-align: center;
+  }
+  .esriViewPopup .gallery {
+    margin: 0 auto;
+  }
