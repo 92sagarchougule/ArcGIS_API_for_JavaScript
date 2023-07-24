@@ -7,8 +7,9 @@
 .header {
     overflow: hidden;
     background-color: #08aaa2;
-    padding: 1px 1px 1px 1px;
-    border: black 2px groove;
+    padding: 5px;
+    border-top: black 2px groove;
+    border-bottom: black 2px groove;
   }
   
   /* Style the header links */
@@ -19,7 +20,7 @@
     padding: 12px;
     text-decoration: none;
     font-size: 18px;
-    line-height: 15px;
+    line-height: 1px;
     border-radius: 4px;
   }
   
@@ -74,12 +75,15 @@
 
   .left {
     width: 15%;
-    border: black 2px groove;
+    border-left: black 2px groove;
+    border-bottom: black 2px groove;
   }
   
   .right {
     width: 85%;
-    border: black 2px groove;
+    border-right: black 2px groove;
+    border-left: black 2px groove;
+    border-bottom: black 2px groove;
   }
   
   /* Clear floats after the columns */
@@ -93,4 +97,16 @@
     height: 100%;
     margin: 0;
     padding: 0;
+  }
+
+  /* Input text */
+
+  #add_text{
+    padding: 5px;
+    margin: 5px;
+  }
+
+  #sub_butt{
+    padding: 5px;
+    margin: 5px;
   }
