@@ -20,5 +20,18 @@ html, body, #map {
   .esriViewPopup .gallery {
     margin: 0 auto;
   }
-
+/* 
+  #map{ 
+    margin: 0; 
+    padding: 0;
+   } */
+   
+  /* #leftPanel {
+    margin:5px;
+    background: #fff;
+    color: #444;
+    font-family: arial;
+    width: 250px;
+    border-right: solid 1px #888;
+  } */
   
