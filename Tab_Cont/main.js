@@ -39,7 +39,8 @@
 
 
     // // Carbon storage of trees in Warren Wilson College.
-   var fcLayer = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer/0"
+   //var fcLayer = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Earthquakes_Since1970/FeatureServer/0"
+   var fcLayer = "https://portal.mrsac.org.in/webadpgis8/rest/services/admin2011/admin_village_16/MapServer/0"
     // //const url = "https://services.myserver.com/lidGgNLxw9LL0SbI/ArcGIS/rest/services/Hydrography/Watershed173811/FeatureServer/1/1?f=pjson"
     // var featureLayer = new FeatureLayer(fcLayer,{
     //   outFields: ["*"] //make sure field to label is specified here in outFields
@@ -48,10 +49,10 @@
       title: "Earthquake",
       description: "Year : {year_}:  {num_deaths} No of Deaths",
       fieldInfos: [{ //define field infos so we can specify an alias
-        fieldName: "latitude",
+        fieldName: "VIL_NAME ",
         label: "Entrants"
       },{
-        fieldName: "longitude",
+        fieldName: "GPNCODE ",
         label: "Starters"
       },{
         fieldName: "magnitude",
@@ -59,10 +60,10 @@
       }],
       mediaInfos:[{ //define the bar chart
         caption: "",
-        type:"barchart",
+        type:"STNCODE ",
         value:{
           theme: "Dollar",
-          fields:["latitude","longitude","magnitude"]
+          fields:["VIL_NAME","GPNCODE","STNCODE"]
         }
       }]
     });
