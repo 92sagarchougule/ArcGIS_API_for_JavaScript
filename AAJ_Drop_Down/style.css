@@ -1,0 +1,29 @@
+#viewDiv{
+    padding: 0%;
+    margin: 0%;
+    width: 100%;
+    height: 100%;
+}
+
+#select {
+    position: absolute;
+    top: 5%;
+    left: 8%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjust the gap between the selects as needed */
+    background-color: wheat;
+    padding: 10px;
+    margin: 20px;
+    transition: all 0.3s ease; /* Optional: add a smooth transition effect */
+}
+
+#folder,
+#Service,
+#Layer {
+   
+    width: 200px; 
+    padding: 2px;
+    margin: 5px;
+}
+
