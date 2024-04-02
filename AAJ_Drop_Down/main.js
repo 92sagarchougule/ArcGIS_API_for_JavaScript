@@ -6,7 +6,15 @@ function refreshPage() {
 }
 
 
-require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widgets/Print", "esri/widgets/Legend", "esri/widgets/LayerList", "esri/widgets/ScaleBar" ], (Map, MapView, FeatureLayer, Print, Legend, LayerList, ScaleBar) => { /* code goes here */ 
+require(["esri/Map","esri/views/MapView",
+ "esri/layers/FeatureLayer", "esri/widgets/Print",
+  "esri/widgets/Legend", "esri/widgets/LayerList", 
+"esri/widgets/ScaleBar",
+
+"esri/Graphic",
+"esri/geometry/geometryEngine",
+"esri/widgets/Sketch",
+"esri/widgets/Sketch/SketchViewModel" ], (Map, MapView, FeatureLayer, Print, Legend, LayerList, ScaleBar, Graphic, geometryEngine, Sketch, SketchViewModel) => { /* code goes here */ 
 
 
     var map = new Map({
@@ -16,7 +24,7 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
     view = new MapView({
         container: "viewDiv",
         map:map,
-        center: [0, 0],
+        center: [0, 15],
         zoom: 2
     });
 
@@ -226,6 +234,8 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
                 
                 map.add(fc_layer);
 
+                buffers(fc_layer);
+
 
 
                 // Wait for the layer view to be loaded
@@ -261,6 +271,66 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
 
 
     };
+
+
+
+    function buffers(fc_layer){
+
+    // Wait for the layer to load
+  view.whenLayerView(fc_layer).then(function(layerView) {
+    // Create a SketchViewModel
+    var sketchViewModel = new SketchViewModel({
+      view: view,
+      layer: fc_layer,
+      polylineSymbol: {
+        type: "simple-line",
+        color: [4, 90, 141],
+        width: 4
+      },
+      polygonSymbol: {
+        type: "simple-fill",
+        color: [4, 90, 141, 0.5],
+        outline: {
+          color: [4, 90, 141],
+          width: 1
+        }
+      }
+    });
+
+    // Add a sketch widget to the view
+    var sketchWidget = new Sketch({
+      view: view,
+      layer: fc_layer,
+      viewModel: sketchViewModel
+    });
+
+    // Add the sketch widget to the view
+    view.ui.add(sketchWidget, "top-right");
+
+    // Event listener to perform buffer when sketch is completed
+    sketchViewModel.on("create", function(event) {
+      if (event.state === "complete") {
+        var geometry = event.graphic.geometry;
+        var bufferedGeometry = geometryEngine.geodesicBuffer(geometry, 1000, "meters"); // Buffer by 1000 meters, adjust as needed
+        // Create a graphic for the buffered geometry
+        var bufferedGraphic = new Graphic({
+          geometry: bufferedGeometry,
+          symbol: {
+            type: "simple-fill",
+            color: [255, 0, 0, 0.5],
+            outline: {
+              color: [255, 0, 0],
+              width: 2
+            }
+          }
+        });
+        // Add the buffered graphic to the view
+        view.graphics.add(bufferedGraphic);
+      }
+    });
+  });
+
+}
 
 
            
