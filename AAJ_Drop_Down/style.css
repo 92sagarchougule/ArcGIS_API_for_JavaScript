@@ -1,3 +1,18 @@
+/* #navBar{
+    padding: 0%;
+    margin: 0%;
+    width: 100%;
+    height: 4%;
+}
+
+#sidebar{
+    left: 10%;
+    padding: 0%;
+    margin: 0%;
+    width: 0%;
+    height: 4%;
+} */
+
 #viewDiv{
     padding: 0%;
     margin: 0%;
@@ -8,7 +23,7 @@
 #select {
     position: absolute;
     top: 5%;
-    left: 8%;
+    left: 5%;
     display: flex;
     flex-direction: column;
     gap: 8px; /* Adjust the gap between the selects as needed */
@@ -23,7 +38,14 @@
 #Layer {
    
     width: 200px; 
-    padding: 2px;
+    padding: 5px;
     margin: 5px;
+   
+}
+
+#refresh{
+    background-color: rgb(139, 216, 94);
+    padding: 2px;
+    /* color: red; */
 }
 

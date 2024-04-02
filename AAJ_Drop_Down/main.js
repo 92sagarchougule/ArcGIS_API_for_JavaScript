@@ -68,6 +68,9 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
         //console.log(folder_Name);
     
         var url = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/" + folder_Name + "?f=pjson";
+
+        // console.log(url);
+
         var xhttp = new XMLHttpRequest();
         xhttp.responseType = 'json';
     
@@ -85,10 +88,12 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
     
                 // Iterate over services and add options to the dropdown
                 xhttp.response.services.forEach(function (service, index) {
-                    var option = document.createElement('option');
-                    option.value = index + 1; // Assuming you want the index as the value
-                    option.text = service.name;
-                    select.appendChild(option);
+                    if(service.type == "FeatureServer"){
+                        var option = document.createElement('option');
+                        option.value = index + 1; // Assuming you want the index as the value
+                        option.text = service.name;
+                        select.appendChild(option);
+                    }
                 });
             } else {
                 console.error('Error:', xhttp.status);
@@ -113,6 +118,8 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
         var ServiceSelect = document.getElementById('Service');
         var Service_Name = ServiceSelect.options[ServiceSelect.selectedIndex].text; // Corrected variable name
         //console.log(Service_Name);
+
+       
 
         var url  = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/"+ Service_Name + "/FeatureServer?f=pjson";
         //console.log(url);
@@ -159,14 +166,7 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
     // onchange function for layers ----------------------------------------------------------------------------------------------------------------------------------------
     document.getElementById('Layer').onchange = function () {
 
-        // fc_layer.remove();
-        // code goes here
-        //alert('working here');
-    
-        //document.getElementById('Service').value = 0;
-
-        // print.destroy();
-        // legend.destroy()
+        map.remove(fc_layer);
 
         var ServiceSelect = document.getElementById('Service');
         var Service_Name = ServiceSelect.options[ServiceSelect.selectedIndex].text; // Corrected variable name
@@ -180,11 +180,7 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
 
         var url  = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/"+ Service_Name +"/FeatureServer/"+Layer_value;
 
-        // https://sampleserver6.arcgisonline.com/arcgis/rest/services/LocalGovernment/Recreation/FeatureServer/0
-        // https://sampleserver6.arcgisonline.com/arcgis/rest/services/LocalGovernmentLocalGovernment/Recreation/FeatureServer/0
-
-
-        console.log(url);
+        // console.log(url);
 
         //console.log(url);
         var xhttp = new XMLHttpRequest();
@@ -200,15 +196,6 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
                 let select = document.getElementById('Layer');
                 let fc_layer = xhttp.response;
                 //console.log(fc_layer);
-                
-                //Clear existing options before adding new ones
-                // select.innerHTML = '<option value="0">Select Layer</option>';
-                // for (let layer of Layers) {
-                //     var option = document.createElement('option');
-                //     option.value = layer.id;
-                //     option.text = layer.name;
-                //     select.appendChild(option);
-                // }
                 
                 url =  "https://sampleserver6.arcgisonline.com/arcgis/rest/services/"+ Service_Name +"/FeatureServer/"+Layer_value;
 
@@ -238,6 +225,19 @@ require(["esri/Map","esri/views/MapView", "esri/layers/FeatureLayer", "esri/widg
                 });
                 
                 map.add(fc_layer);
+
+
+
+                // Wait for the layer view to be loaded
+                view.whenLayerView(fc_layer).then(function(layerView) {
+                    // Get the extent of the layer
+                    var layerExtent = fc_layer.fullExtent || fc_layer.extent;
+                
+                    // Zoom to the extent of the layer
+                    view.goTo(layerExtent);
+                });
+
+
 
 
                 
