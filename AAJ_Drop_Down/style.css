@@ -13,14 +13,14 @@
     height: 4%;
 } */
 
-#viewDiv{
+#viewDiv {
     padding: 0%;
     margin: 0%;
     width: 100%;
     height: 100%;
-}
-
-#select {
+  }
+  
+  #select {
     position: absolute;
     top: 5%;
     left: 5%;
@@ -31,21 +31,25 @@
     padding: 10px;
     margin: 20px;
     transition: all 0.3s ease; /* Optional: add a smooth transition effect */
-}
-
-#folder,
-#Service,
-#Layer {
-   
-    width: 200px; 
+  }
+  
+  #folder,
+  #Service,
+  #Layer {
+    width: 200px;
     padding: 5px;
     margin: 5px;
-   
-}
-
-#refresh{
+  }
+  
+  #refresh {
     background-color: rgb(139, 216, 94);
     padding: 2px;
     /* color: red; */
-}
+  }
 
+  .esri-legend__layer {
+    margin-left: 7px;
+    overflow: auto;
+    text-align: center;
+}
+  

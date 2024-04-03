@@ -6,14 +6,16 @@
     <title>adding layers</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shp-write/2.0.2/SHPOut.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  
     <script src="https://js.arcgis.com/4.28/"></script>
 </head>
 
 <body>
 
-    <!-- <div id="navBar"></div>
-
-   <div id="sidebar"></div> -->
+    
 
     <div id="viewDiv"></div>
 
@@ -34,6 +36,8 @@
         </select>
 
         <button id="refresh" onclick = refreshPage()> Refresh </button>
+
+        <button id="exportButton">Export Shapefile</button>
 
     </div>
 
