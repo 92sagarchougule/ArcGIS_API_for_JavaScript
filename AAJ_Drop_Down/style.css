@@ -13,17 +13,22 @@
     height: 4%;
 } */
 
-#viewDiv {
+/* #viewDiv {
     padding: 0%;
     margin: 0%;
     width: 100%;
     height: 100%;
+  } */
+
+  #sidebar{
+    align-items: center;
+    border: 0px black groove;
   }
   
   #select {
     position: absolute;
     top: 5%;
-    left: 5%;
+   
     display: flex;
     flex-direction: column;
     gap: 8px; /* Adjust the gap between the selects as needed */
@@ -31,6 +36,36 @@
     padding: 10px;
     margin: 20px;
     transition: all 0.3s ease; /* Optional: add a smooth transition effect */
+    width: 200px;
+  }
+
+ 
+
+  #bufferFunctionality{
+    position: absolute;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjust the gap between the selects as needed */
+    background-color: wheat;
+    padding: 10px;
+    margin: 20px;
+    transition: all 0.3s ease; /* Optional: add a smooth transition effect */
+    width: 200px;
+  }
+
+
+  #exportshp{
+    position: absolute;
+    top: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjust the gap between the selects as needed */
+    background-color: wheat;
+    padding: 10px;
+    margin: 20px;
+    transition: all 0.3s ease; /* Optional: add a smooth transition effect */
+    width: 200px;
   }
   
   #folder,
@@ -54,8 +89,7 @@
 }
 
 #basemapGalleryButton {
-  position: absolute; /* Set the button position to absolute */
-  left: 4px; /* Adjust the left position */
-  bottom: 4px; /* Adjust the bottom position */
-  z-index: 1000; /* Ensure the button is above the map */
+  position: absolute; 
+  top: 80%;
+  z-index: 1000; 
 }

@@ -22,9 +22,16 @@ require(["esri/Map",
     "esri/views/draw/Draw",
     "esri/layers/GraphicsLayer",
     "esri/geometry/support/webMercatorUtils",
-    "esri/widgets/BasemapGallery"
+    "esri/widgets/BasemapGallery",
+    
 ], 
-(Map, MapView, FeatureLayer, Print, Legend, LayerList, ScaleBar, Sketch, Graphic, geometryEngine, Draw, GraphicsLayer, webMercatorUtils, BasemapGallery) => {
+(Map, MapView, 
+    FeatureLayer, Print, 
+    Legend, LayerList, ScaleBar, 
+    Sketch, Graphic, 
+    geometryEngine, Draw, GraphicsLayer, 
+    webMercatorUtils, BasemapGallery,
+    ) => {
 	/* code goes here */
 
     // Main Map Code -------------------
@@ -214,6 +221,9 @@ require(["esri/Map",
                                                                     // Zoom to the extent of the layer
                                                                     view.goTo(layerExtent);
                                                                 });
+
+                                                                buffer(fc_layer);
+
                                                             } else {
                                                                 console.error('Error:', xhttp.status);
                                                             }
@@ -348,7 +358,55 @@ require(["esri/Map",
 
 
 
+        // Onclick Buffer -------------------------------------------------------------------------------------------------------
 
+
+            function buffer(fc_layer){
+
+                document.getElementById("bufferButton").onclick = function() {
+                    // Define buffer distance in meters
+
+
+                    
+                    const bufferDistance = document.getElementById("distance").value;
+    
+                    // Query all features from the feature layer
+                    fc_layer.queryFeatures().then(function(response) {
+                        // Extract geometry from the response
+                        const features = response.features.map(function(feature) {
+                            return feature.geometry;
+                        });
+    
+                        // Perform buffer operation on the geometries
+                        const bufferedGeometries = features.map(function(geometry) {
+                            // Perform buffer operation
+                            return geometryEngine.geodesicBuffer(geometry, bufferDistance, "meters");
+                        });
+    
+                        // Create graphics for the buffered geometries
+                        const graphics = bufferedGeometries.map(function(geometry) {
+                            return new Graphic({
+                                geometry: geometry,
+                                symbol: {
+                                    type: "simple-fill",
+                                    color: [255, 0, 0, 0.5], // Red with 50% transparency
+                                    outline: {
+                                        color: [0, 0, 0],
+                                        width: .9
+                                    }
+                                }
+                            });
+                        });
+    
+                        // Clear existing buffer graphics
+                        view.graphics.removeAll();
+    
+                        // Add buffered graphics to the view
+                        view.graphics.addMany(graphics);
+                    });
+                };
+
+                    }
 
 
         // Add all widgets to the view  ------------------------------------------------------------------------------------------------------
