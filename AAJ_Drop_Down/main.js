@@ -378,7 +378,7 @@ require(["esri/Map",
 
                     view.on("click", function(event) {
                         // event is the event handle returned after the event fires.
-                        console.log(event.mapPoint);
+                        //console.log(event.mapPoint);
                     });
 
                     legend = new Legend({
