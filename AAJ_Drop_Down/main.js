@@ -224,6 +224,12 @@ require(["esri/Map",
 
                                                                 buffer(fc_layer);
 
+                                                                document.getElementById('bufferButton').style.display = "block";
+                                                                // document.getElementById('distance').style.display = "block";
+                                                                // document.getElementById('distance_num').style.display = "block";
+
+                                                                
+
                                                             } else {
                                                                 console.error('Error:', xhttp.status);
                                                             }
@@ -233,183 +239,142 @@ require(["esri/Map",
                                                         };
                                                     };
         // Select Drop down completed -----------------------------------------------------------------------------------------------------------------------------------------
+                                        var sketch = new Sketch({
+                                            view: view,
+                                            layer: new GraphicsLayer(),
+                                            availableCreateTools: ["point", "polyline", "polygon"]
+                                        });
+                                    
+                                        view.ui.add(sketch, "top-right");
+                                    
+                                        // Store drawn geometries
+                                        var drawnGraphics = [];
+                                    
+                                        // Listen to the create event to get the geometry drawn by the user
+                                        sketch.on("create", function(event) {
+                                            if (event.state === "complete") {
+                                            // Add the drawn graphic to the view
+                                            view.graphics.add(event.graphic);
+                                            drawnGraphics.push(event.graphic);
+                                            }
+                                        });
+                                    
+                                        // Function to export drawn geometries as Shapefile
+                                        document.getElementById("exportButton").onclick = function() {
+                                            if (drawnGraphics.length === 0) {
+                                            alert("No geometries to export.");
+                                            return;
+                                            }
+                                            
+                                            // Convert drawn geometries to WGS84 coordinates
+                                            var geometriesWGS84 = drawnGraphics.map(function(graphic) {
+                                            if (graphic.geometry.spatialReference.isWebMercator) {
+                                                return webMercatorUtils.webMercatorToGeographic(graphic.geometry);
+                                            }
+                                            return graphic.geometry;
+                                            });
+                                            
+                                            // Prepare features for SHP writer
+                                            var features = geometriesWGS84.map(function(geometry) {
+                                            return {
+                                                type: "Feature",
+                                                geometry: geometry.toJSON(),
+                                                properties: {}
+                                            };
+                                            });
+                                            
+                                            // Create shapefile content
+                                            var shpContent = {
+                                            type: "FeatureCollection",
+                                            features: features
+                                            };
+                                    
+                                            // Convert shapefile content to Blob
+                                            var blob = new Blob([JSON.stringify(shpContent)], { type: "application/json" });
+                                    
+                                            // Save Blob as file (Note: This would be sent to the server instead in a real application)
+                                            saveAs(blob, "drawn_geometries.geojson");
+                                        };
 
-        // var sketch = new Sketch({
-        //     view: view,
-        //     layer: new GraphicsLayer(),
-        //     availableCreateTools: ["point", "polyline", "polygon"]
-        //   });
-    
-        //   view.ui.add(sketch, "top-right");
+                                        sketch.visible = false;
 
-        //   // Listen to the create event to get the geometry drawn by the user
-        // sketch.on("create", function(event) {
-        //     if (event.state === "complete") {
-        //     // Add the drawn graphic to the view
-        //     view.graphics.add(event.graphic);
-        //     // If it's a polygon, calculate its area
-        //     if (event.graphic.geometry.type === "polygon") {
-        //         var area = geometryEngine.planarArea(event.graphic.geometry, "square-meters");
-        //         console.log("Area: " + area + " square meters");
-        //     }
-        //     }
-        // });
+                                        document.getElementById("enableExport").onclick = function() {
 
-
-        const basemapGallery = new BasemapGallery({
-            view: view,
-            visible:false
-          });
-    
-          // Add the widget to the bottom-left corner of the view
-          view.ui.add(basemapGallery, {
-            position: "bottom-left"
-          });
-    
-          // Toggle Basemap Gallery visibility based on button click
-          document.getElementById("basemapGalleryButton").onclick = function() {
-            if (basemapGallery.visible) {
-              basemapGallery.visible = false;
-            } else {
-              basemapGallery.visible = true;
-            }
-          };
-
-
-
-
-
-        var sketch = new Sketch({
-            view: view,
-            layer: new GraphicsLayer(),
-            availableCreateTools: ["point", "polyline", "polygon"]
-          });
-    
-          view.ui.add(sketch, "top-right");
-    
-          // Store drawn geometries
-          var drawnGraphics = [];
-    
-          // Listen to the create event to get the geometry drawn by the user
-          sketch.on("create", function(event) {
-            if (event.state === "complete") {
-              // Add the drawn graphic to the view
-              view.graphics.add(event.graphic);
-              drawnGraphics.push(event.graphic);
-            }
-          });
-    
-          // Function to export drawn geometries as Shapefile
-          document.getElementById("exportButton").onclick = function() {
-            if (drawnGraphics.length === 0) {
-              alert("No geometries to export.");
-              return;
-            }
-            
-            // Convert drawn geometries to WGS84 coordinates
-            var geometriesWGS84 = drawnGraphics.map(function(graphic) {
-              if (graphic.geometry.spatialReference.isWebMercator) {
-                return webMercatorUtils.webMercatorToGeographic(graphic.geometry);
-              }
-              return graphic.geometry;
-            });
-            
-            // Prepare features for SHP writer
-            var features = geometriesWGS84.map(function(geometry) {
-              return {
-                type: "Feature",
-                geometry: geometry.toJSON(),
-                properties: {}
-              };
-            });
-            
-            // Create shapefile content
-            var shpContent = {
-              type: "FeatureCollection",
-              features: features
-            };
-    
-            // Convert shapefile content to Blob
-            var blob = new Blob([JSON.stringify(shpContent)], { type: "application/json" });
-    
-            // Save Blob as file (Note: This would be sent to the server instead in a real application)
-            saveAs(blob, "drawn_geometries.geojson");
-    
-            // Send the drawn geometries to the server (replace this with actual server-side code)
-            // fetch('/save-shapefile', {
-            //   method: 'POST',
-            //   body: JSON.stringify(shpContent),
-            //   headers: {
-            //     'Content-Type': 'application/json'
-            //   }
-            // }).then(response => {
-            //   if (!response.ok) {
-            //     throw new Error('Network response was not ok');
-            //   }
-            //   return response.blob();
-            // }).then(blob => {
-            //   saveAs(blob, "drawn_geometries.zip");
-            // }).catch(error => {
-            //   console.error('There was a problem with your fetch operation:', error);
-            // });
-          };
-
-          
-
+                                                            if (sketch.visible) {
+                                                                sketch.visible = false;
+                                                                } else {
+                                                                    sketch.visible = true;
+                                                                }
+                                                }
 
 
         // Onclick Buffer -------------------------------------------------------------------------------------------------------
 
 
-            function buffer(fc_layer){
+                    function buffer(fc_layer){
 
-                document.getElementById("bufferButton").onclick = function() {
-                    // Define buffer distance in meters
-
-
-                    
-                    const bufferDistance = document.getElementById("distance").value;
-    
-                    // Query all features from the feature layer
-                    fc_layer.queryFeatures().then(function(response) {
-                        // Extract geometry from the response
-                        const features = response.features.map(function(feature) {
-                            return feature.geometry;
-                        });
-    
-                        // Perform buffer operation on the geometries
-                        const bufferedGeometries = features.map(function(geometry) {
-                            // Perform buffer operation
-                            return geometryEngine.geodesicBuffer(geometry, bufferDistance, "meters");
-                        });
-    
-                        // Create graphics for the buffered geometries
-                        const graphics = bufferedGeometries.map(function(geometry) {
-                            return new Graphic({
-                                geometry: geometry,
-                                symbol: {
-                                    type: "simple-fill",
-                                    color: [255, 0, 0, 0.5], // Red with 50% transparency
-                                    outline: {
-                                        color: [0, 0, 0],
-                                        width: .9
-                                    }
-                                }
-                            });
-                        });
-    
-                        // Clear existing buffer graphics
-                        view.graphics.removeAll();
-    
-                        // Add buffered graphics to the view
-                        view.graphics.addMany(graphics);
-                    });
-                };
+                            document.getElementById("bufferButton").onclick = function() {
+                                // Define buffer distance in meters                    
+                                const bufferDistance = document.getElementById("distance").value;
+                                // Query all features from the feature layer
+                                fc_layer.queryFeatures().then(function(response) {
+                                    // Extract geometry from the response
+                                    const features = response.features.map(function(feature) {
+                                        return feature.geometry;
+                                    });
+                
+                                    // Perform buffer operation on the geometries
+                                    const bufferedGeometries = features.map(function(geometry) {
+                                        // Perform buffer operation
+                                        return geometryEngine.geodesicBuffer(geometry, bufferDistance, "meters");
+                                    });
+                                    // Create graphics for the buffered geometries
+                                    const graphics = bufferedGeometries.map(function(geometry) {
+                                        return new Graphic({
+                                            geometry: geometry,
+                                            symbol: {
+                                                type: "simple-fill",
+                                                color: [255, 0, 0, 0.5], // Red with 50% transparency
+                                                outline: {
+                                                    color: [0, 0, 0],
+                                                    width: .9
+                                                }
+                                            }
+                                        });
+                                    });
+                
+                                    // Clear existing buffer graphics
+                                    view.graphics.removeAll();
+                
+                                    // Add buffered graphics to the view
+                                    view.graphics.addMany(graphics);
+                                });
+                            };
 
                     }
 
 
         // Add all widgets to the view  ------------------------------------------------------------------------------------------------------
+
+
+                    const basemapGallery = new BasemapGallery({
+                        view: view,
+                        visible:false
+                    });
+                
+                    // Add the widget to the bottom-left corner of the view
+                    view.ui.add(basemapGallery, {
+                        position: "bottom-left"
+                    });
+                
+                    // Toggle Basemap Gallery visibility based on button click
+                    document.getElementById("basemapGalleryButton").onclick = function() {
+                        if (basemapGallery.visible) {
+                        basemapGallery.visible = false;
+                        } else {
+                        basemapGallery.visible = true;
+                        }
+                    };
 
                     view.on("click", function(event) {
                         // event is the event handle returned after the event fires.
