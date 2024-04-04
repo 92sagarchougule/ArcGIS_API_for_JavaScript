@@ -248,13 +248,22 @@ require(["esri/Map",
 
         const basemapGallery = new BasemapGallery({
             view: view,
-            expanded:false
+            visible:false
           });
-  
-          // Add the widget to the top-right corner of the view
+    
+          // Add the widget to the bottom-left corner of the view
           view.ui.add(basemapGallery, {
             position: "bottom-left"
           });
+    
+          // Toggle Basemap Gallery visibility based on button click
+          document.getElementById("basemapGalleryButton").onclick = function() {
+            if (basemapGallery.visible) {
+              basemapGallery.visible = false;
+            } else {
+              basemapGallery.visible = true;
+            }
+          };
 
 
 

@@ -52,4 +52,10 @@
     overflow: auto;
     text-align: center;
 }
-  
+
+#basemapGalleryButton {
+  position: absolute; /* Set the button position to absolute */
+  left: 4px; /* Adjust the left position */
+  bottom: 4px; /* Adjust the bottom position */
+  z-index: 1000; /* Ensure the button is above the map */
+}
