@@ -209,6 +209,9 @@ require([
           "/FeatureServer/" +
           Layer_value;
 
+
+          // url = "https://services6.arcgis.com/F7QOvKuSY1sCek45/arcgis/rest/services/Property_Map/FeatureServer/1";
+
         fc_layer = new FeatureLayer({
           // URL to the service
           url: url,
@@ -244,6 +247,8 @@ require([
         });
 
         buffer(fc_layer);
+        // document.getElementById("intersect").addEventListener("click", findIntersect);
+
 
         document.getElementById("bufferButton").style.display = "block";
         // document.getElementById('distance').style.display = "block";
@@ -256,6 +261,62 @@ require([
       console.error("Network error");
     };
   };
+
+
+
+
+  // add other layers
+
+            // var fc_layer_1 = new FeatureLayer({
+            //   // URL to the service
+            //   url: url = "https://services6.arcgis.com/F7QOvKuSY1sCek45/arcgis/rest/services/Property_Map/FeatureServer/1",
+            //   popupTemplate: {
+            //     // Function to generate dynamic content for the popup
+            //     content: function (feature) {
+            //       // Initialize an empty string to store the popup content
+            //       let popupContent = "";
+    
+            //       // Get the attributes of the feature
+            //       const attributes = feature.graphic.attributes;
+    
+            //       // Iterate through each attribute in the feature
+            //       for (const attribute in attributes) {
+            //         // Append the attribute name and its value to the popup content
+            //         popupContent += `<b>${attribute} : </b> ${attributes[attribute]}<br>`;
+            //       }
+    
+            //       // Return the constructed popup content
+            //       return popupContent;
+            //     },
+            //   },
+            
+
+            // });
+
+            
+
+            // var fc_layer_2 = new FeatureLayer({
+            //   // URL to the service
+            //   url: url = "https://services6.arcgis.com/F7QOvKuSY1sCek45/arcgis/rest/services/Property_Map/FeatureServer/0",
+
+            // });
+
+           
+
+
+
+            // var fc_layer_3 = new FeatureLayer({
+            //   // URL to the service
+            //   url: url = "https://services6.arcgis.com/F7QOvKuSY1sCek45/arcgis/rest/services/Property_Map/FeatureServer/2",
+
+            // });
+
+
+            // map.add(fc_layer_1, fc_layer_2, fc_layer_3)
+            
+
+
+
   // Select Drop down completed -----------------------------------------------------------------------------------------------------------------------------------------
   var sketch = new Sketch({
     view: view,
@@ -328,7 +389,45 @@ require([
 
   // Onclick Buffer -------------------------------------------------------------------------------------------------------
 
+      // // Get the color input element
+      // var colorInput = document.getElementById("favcolor");
+
+      // // Add an event listener to listen for changes in the color input
+      // colorInput.addEventListener("input", function() {
+      //     // Get the value of the color input
+      //     var colorValue = colorInput.value;
+
+      //     // Convert the hexadecimal color value to RGB
+      //     var rgbValue = hexToRgb(colorValue);
+
+      //     // Log the RGB value
+      //     console.log("RGB Value: " + rgbValue);
+      // });
+
+      // // Function to convert hexadecimal color to RGB
+      // function hexToRgb(hex) {
+      //     // Remove '#' if present
+      //     hex = hex.replace('#', '');
+
+      //     // Convert to RGB
+      //     var r = parseInt(hex.substring(0, 2), 16);
+      //     var g = parseInt(hex.substring(2, 4), 16);
+      //     var b = parseInt(hex.substring(4, 6), 16);
+
+      //     // Return RGB value
+      //     return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+      // }
+
+      
+
+
+
   function buffer(fc_layer) {
+
+    // var color = document.getElementById("favcolor").value;
+
+    //   console.log(color);
+
     document.getElementById("bufferButton").onclick = function () {
       // Define buffer distance in meters
       const bufferDistance = document.getElementById("distance").value;
@@ -340,7 +439,7 @@ require([
         });
 
         // Perform buffer operation on the geometries
-        const bufferedGeometries = features.map(function (geometry) {
+        var bufferedGeometries = features.map(function (geometry) {
           // Perform buffer operation
           return geometryEngine.geodesicBuffer(
             geometry,
@@ -349,12 +448,13 @@ require([
           );
         });
         // Create graphics for the buffered geometries
-        const graphics = bufferedGeometries.map(function (geometry) {
+        var buffergraphics = bufferedGeometries.map(function (geometry) {
           return new Graphic({
             geometry: geometry,
             symbol: {
               type: "simple-fill",
-              color: [225, 0, 0, 0.5], // Red with 50% transparency
+              //style: "cross",
+              color: [0, 255, 0, .3], //document.getElementById("favcolor").value
               outline: {
                 color: [0, 0, 0],
                 width: 0.9,
@@ -367,10 +467,65 @@ require([
         view.graphics.removeAll();
 
         // Add buffered graphics to the view
-        view.graphics.addMany(graphics);
+        view.graphics.addMany(buffergraphics);
       });
     };
   }
+
+
+
+
+
+
+
+    document.getElementById("intersect").onclick = function () {
+        // Query all features from the feature layer
+        fc_layer.queryFeatures().then(function (response) {
+            // Extract geometry from the response
+            const features = response.features.map(function (feature) {
+                return feature.geometry;
+            });
+
+            // Perform intersection operation
+            var intersectedGeometry = geometryEngine.intersect(features);
+
+            // Create graphic for the intersected geometry
+            var intersectedGraphic = new Graphic({
+                geometry: intersectedGeometry,
+                symbol: {
+                    type: "simple-fill",
+                    color: [0, 255, 0, .5], // Green color for intersection
+                    outline: {
+                        color: [0, 0, 0],
+                        width: 0.9,
+                    },
+                },
+            });
+
+            // Clear existing graphics
+            view.graphics.removeAll();
+
+            // Add intersected graphic to the view
+            view.graphics.add(intersectedGraphic);
+        });
+    };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   // Add all widgets to the view  ------------------------------------------------------------------------------------------------------
 
