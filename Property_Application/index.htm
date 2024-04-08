@@ -1,0 +1,123 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>adding layers</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.28/esri/themes/light/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shp-write/2.0.2/SHPOut.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+  
+    <script src="https://js.arcgis.com/4.28/"></script>
+</head>
+
+<body>
+
+
+    <!-- NavBar -->
+    <div id="navigation" style="width: 100%; height: 4%; text-align: center; border: 1px black groove; z-index: 100; background-color: rgb(186, 142, 228);" > <H4 style="position: relative;bottom: 17px;"> ARCGIS MAPS SDK FOR JAVASCRIPT </H4></div>
+    
+<!-- Side Bar -->
+    
+    <div id="sidebar" style="background-color: rgb(250, 242, 242); width:15%; height: 96%; float:left;">
+
+    <!-- Layer Selection Component -->
+        <div id="select" style="text-align: center; border: 1px black groove;" > Select Feature Layer
+            
+            <div id="dropdown"> 
+            <select name="select folder" id="folder">
+                <option value="0">Select Folder</option>
+            </select>
+            <select name="select Service" id="Service">
+                <option value="0">Select Service</option>
+            </select>
+            <select name="select Service" id="Layer">
+                <option value="0">Select Layer</option>
+            </select>
+            </div>
+
+            <button id="refresh" onclick = refreshPage()> Refresh </button>           
+             
+            
+            
+        </div>
+    
+    
+    <!-- Buffer Component -->
+       
+        <div id="bufferFunctionality" style="text-align: center; border: 1px black groove;">
+            Buffer Functionality
+            <!-- <label for="favcolor"> <h5>Select your color:</h5>
+                <input type="color" id="favcolor" name="favcolor" value="#ff0000" style="z-index: 99; opacity: 0.5;">
+
+            </label> -->
+            <label for="distance"> Distance
+                <input id="distance" size="12" ></input>
+            </label>
+            <!-- <button id="bufferButton" style="display: none;">Buffer Features</button> -->
+
+            <button id="bufferButton">Buffer</button>
+
+
+            <button id="intersect">Intersect</button>
+
+
+        </div>
+
+
+        <div id="exportshp" style="text-align: center; border: 1px black groove;">
+            Export Layer Functionality
+
+            <button id="enableExport">Start/Stop Digitization</button>
+
+            <button id="exportButton">Export Shapefile</button>
+        </div>
+
+
+        <div id="basemapGalleryDiv" ></div>
+            
+
+        <!-- <div id="basemap" style="text-align:center; border: 1px black groove;">
+            Basemap
+                
+        </div> -->
+
+
+
+    </div>
+
+
+
+
+<!-- Map View -->
+    <div id="viewDiv" style="width:85%; height: 96%; float:left; border: 0px black groove;" >
+        <button id="basemapGalleryButton" style="left:1%; bottom:8%;">Basemap Gallery</button>
+    </div>
+
+
+
+    
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+    <script src="main.js"></script>
+
+
+    
+
+</body>
+
+</html>
