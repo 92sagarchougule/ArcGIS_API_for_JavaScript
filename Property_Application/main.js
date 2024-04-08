@@ -103,15 +103,7 @@ require([
 
     var url ="https://services6.arcgis.com/F7QOvKuSY1sCek45/ArcGIS/rest/services/" + folder_Name + "/FeatureServer?f=pjson";
 
-    console.log(url);
-
-
-
-    // https://services6.arcgis.com/F7QOvKuSY1sCek45/ArcGIS/rest/services/Property_Map/FeatureServer
-
-    // https://services6.arcgis.com/F7QOvKuSY1sCek45/ArcGIS/rest/services/Property_Map?f=pjson
-
-
+    // console.log(url);
 
     var xhttp = new XMLHttpRequest();
     xhttp.responseType = "json";
@@ -119,16 +111,10 @@ require([
     xhttp.send();
     xhttp.onload = function () {
       if (xhttp.status == 200) {
-
-
-        console.log(xhttp.response.layers);
-
-
+        // console.log(xhttp.response.layers);
         let select = document.getElementById("Service");
-
         // Clear existing options before adding new ones
         select.innerHTML = '<option value="0">Select Service</option>';
-
         // Iterate over services and add options to the dropdown
         xhttp.response.layers.forEach(function (service, index) {
           // if (service.type == "FeatureServer") {
@@ -138,8 +124,6 @@ require([
             select.appendChild(option);
           // }
         });
-
-
         
       } else {
         console.error("Error:", xhttp.status);
@@ -153,21 +137,16 @@ require([
 
   // onchange function for layers ----------------------------------------------------------------------------------------------------------------------------------------
   document.getElementById("Service").onchange = function () {
-    //document.getElementById('Service').value = 0;
+
+    var Layer_value = document.getElementById("Layer").value;
+
     var ServiceSelect = document.getElementById("folder");
     var Service = ServiceSelect.options[ServiceSelect.selectedIndex].text; // Corrected variable name
     //console.log(Service_Name);
-
     map.remove(fc_layer);
-
-    // var ServiceSelect = document.getElementById("Folder");
-    // var Service_Name = ServiceSelect.options[ServiceSelect.selectedIndex].text; // Corrected variable name
-    //console.log(Service_Name);
-    var LayerSelect = document.getElementById("Layer");
-    var Layer_Name = LayerSelect.options[LayerSelect.selectedIndex].text; // Corrected variable name
-    var Layer_value = document.getElementById("Layer").value;
-
-
+    // var LayerSelect = document.getElementById("Layer");
+    // var Layer_Name = LayerSelect.options[LayerSelect.selectedIndex].text; // Corrected variable name
+    
     var xhttp = new XMLHttpRequest();
     xhttp.responseType = "json";
 
@@ -176,27 +155,10 @@ require([
 
     xhttp.onload = function () {
       if (xhttp.status == 200) {
-        //console.log(xhttp.response);
-
-        // let select = document.getElementById("Layer");
-        // let Layers = xhttp.response.layers;
-        //console.log(Layers);
-
-        // alert('we are here');
-
-
-
-        // url =
-        //   "https://sampleserver6.arcgisonline.com/arcgis/rest/services/" +
-        //   Service_Name +
-        //   "/FeatureServer/" +
-        //   Layer_value;
-
 
           url = "https://services6.arcgis.com/F7QOvKuSY1sCek45/arcgis/rest/services/"+Service+"/FeatureServer/"+Layer_value;
-
+          
           console.log(url);
-
         fc_layer = new FeatureLayer({
           // URL to the service
           url: url,
@@ -205,16 +167,13 @@ require([
             content: function (feature) {
               // Initialize an empty string to store the popup content
               let popupContent = "";
-
               // Get the attributes of the feature
               const attributes = feature.graphic.attributes;
-
               // Iterate through each attribute in the feature
               for (const attribute in attributes) {
                 // Append the attribute name and its value to the popup content
                 popupContent += `<b>${attribute} : </b> ${attributes[attribute]}<br>`;
               }
-
               // Return the constructed popup content
               return popupContent;
             },
@@ -233,22 +192,7 @@ require([
 
         buffer(fc_layer);
         // document.getElementById("intersect").addEventListener("click", findIntersect);
-
-
         document.getElementById("bufferButton").style.display = "block";
-
-
-
-
-
-        //Clear existing options before adding new ones
-        // select.innerHTML = '<option value="0">Select Layer</option>';
-        // for (let layer of Layers) {
-        //   var option = document.createElement("option");
-        //   option.value = layer.id;
-        //   option.text = layer.name;
-        //   select.appendChild(option);
-        // }
       } else {
         console.error("Error:", xhttp.status);
       }
@@ -260,91 +204,87 @@ require([
   };
 
   // onchange function for layers ----------------------------------------------------------------------------------------------------------------------------------------
-  document.getElementById("Layer").onchange = function () {
-    map.remove(fc_layer);
+  // document.getElementById("Layer").onchange = function () {
+  //   map.remove(fc_layer);
 
-    var ServiceSelect = document.getElementById("Service");
-    var Service_Name = ServiceSelect.options[ServiceSelect.selectedIndex].text; // Corrected variable name
-    //console.log(Service_Name);
-    var LayerSelect = document.getElementById("Layer");
-    var Layer_Name = LayerSelect.options[LayerSelect.selectedIndex].text; // Corrected variable name
-    var Layer_value = document.getElementById("Layer").value;
+  //   var ServiceSelect = document.getElementById("Service");
+  //   var Service_Name = ServiceSelect.options[ServiceSelect.selectedIndex].text; // Corrected variable name
+  //   //console.log(Service_Name);
+  //   var LayerSelect = document.getElementById("Layer");
+  //   var Layer_Name = LayerSelect.options[LayerSelect.selectedIndex].text; // Corrected variable name
+  //   var Layer_value = document.getElementById("Layer").value;
 
-    var url =
-      "https://sampleserver6.arcgisonline.com/arcgis/rest/services/" +
-      Service_Name +
-      "/FeatureServer/" +
-      Layer_value;
+  //   var url =
+  //     "https://sampleserver6.arcgisonline.com/arcgis/rest/services/" +
+  //     Service_Name +
+  //     "/FeatureServer/" +
+  //     Layer_value;
 
-    var xhttp = new XMLHttpRequest();
-    xhttp.responseType = "json";
-    xhttp.open("GET", url);
-    xhttp.send();
+  //   var xhttp = new XMLHttpRequest();
+  //   xhttp.responseType = "json";
+  //   xhttp.open("GET", url);
+  //   xhttp.send();
 
-    xhttp.onload = function () {
-      if (xhttp.status == 200) {
-        let select = document.getElementById("Layer");
-        let fc_layer = xhttp.response;
-        //console.log(fc_layer);
+  //   xhttp.onload = function () {
+  //     if (xhttp.status == 200) {
+  //       let select = document.getElementById("Layer");
+  //       let fc_layer = xhttp.response;
+  //       //console.log(fc_layer);
 
-        url =
-          "https://sampleserver6.arcgisonline.com/arcgis/rest/services/" +
-          Service_Name +
-          "/FeatureServer/" +
-          Layer_value;
+  //       url = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/" + Service_Name + "/FeatureServer/" + Layer_value;
 
 
-          // url = "https://services6.arcgis.com/F7QOvKuSY1sCek45/arcgis/rest/services/Property_Map/FeatureServer/1";
+  //         // url = "https://services6.arcgis.com/F7QOvKuSY1sCek45/arcgis/rest/services/Property_Map/FeatureServer/1";
 
-        fc_layer = new FeatureLayer({
-          // URL to the service
-          url: url,
-          popupTemplate: {
-            // Function to generate dynamic content for the popup
-            content: function (feature) {
-              // Initialize an empty string to store the popup content
-              let popupContent = "";
+  //       fc_layer = new FeatureLayer({
+  //         // URL to the service
+  //         url: url,
+  //         popupTemplate: {
+  //           // Function to generate dynamic content for the popup
+  //           content: function (feature) {
+  //             // Initialize an empty string to store the popup content
+  //             let popupContent = "";
 
-              // Get the attributes of the feature
-              const attributes = feature.graphic.attributes;
+  //             // Get the attributes of the feature
+  //             const attributes = feature.graphic.attributes;
 
-              // Iterate through each attribute in the feature
-              for (const attribute in attributes) {
-                // Append the attribute name and its value to the popup content
-                popupContent += `<b>${attribute} : </b> ${attributes[attribute]}<br>`;
-              }
+  //             // Iterate through each attribute in the feature
+  //             for (const attribute in attributes) {
+  //               // Append the attribute name and its value to the popup content
+  //               popupContent += `<b>${attribute} : </b> ${attributes[attribute]}<br>`;
+  //             }
 
-              // Return the constructed popup content
-              return popupContent;
-            },
-          },
-        });
+  //             // Return the constructed popup content
+  //             return popupContent;
+  //           },
+  //         },
+  //       });
 
-        map.add(fc_layer);
-        // Wait for the layer view to be loaded
-        view.whenLayerView(fc_layer).then(function (layerView) {
-          // Get the extent of the layer
-          var layerExtent = fc_layer.fullExtent || fc_layer.extent;
+  //       map.add(fc_layer);
+  //       // Wait for the layer view to be loaded
+  //       view.whenLayerView(fc_layer).then(function (layerView) {
+  //         // Get the extent of the layer
+  //         var layerExtent = fc_layer.fullExtent || fc_layer.extent;
 
-          // Zoom to the extent of the layer
-          view.goTo(layerExtent);
-        });
+  //         // Zoom to the extent of the layer
+  //         view.goTo(layerExtent);
+  //       });
 
-        buffer(fc_layer);
-        // document.getElementById("intersect").addEventListener("click", findIntersect);
+  //       buffer(fc_layer);
+  //       // document.getElementById("intersect").addEventListener("click", findIntersect);
 
 
-        document.getElementById("bufferButton").style.display = "block";
-        // document.getElementById('distance').style.display = "block";
-        // document.getElementById('distance_num').style.display = "block";
-      } else {
-        console.error("Error:", xhttp.status);
-      }
-    };
-    xhttp.onerror = function () {
-      console.error("Network error");
-    };
-  };
+  //       document.getElementById("bufferButton").style.display = "block";
+  //       // document.getElementById('distance').style.display = "block";
+  //       // document.getElementById('distance_num').style.display = "block";
+  //     } else {
+  //       console.error("Error:", xhttp.status);
+  //     }
+  //   };
+  //   xhttp.onerror = function () {
+  //     console.error("Network error");
+  //   };
+  // };
 
 
 
