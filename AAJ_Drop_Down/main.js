@@ -56,8 +56,8 @@ require([
 
   // Select Drop Down Activities -------------------------------------------------------------------------------------------------------------------------------------
   // Get Folder List from ArcGIS Server api  ----------------------------------------------------------------------------------------------------------------------------------------
-  var url =
-    "https://sampleserver6.arcgisonline.com/arcgis/rest/services?f=pjson";
+  var url = "https://sampleserver6.arcgisonline.com/arcgis/rest/services?f=pjson";
+  
   var xhttp = new XMLHttpRequest();
   xhttp.responseType = "json";
   // Use 'GET' instead of 'get'
@@ -308,6 +308,9 @@ require([
             // var fc_layer_3 = new FeatureLayer({
             //   // URL to the service
             //   url: url = "https://services6.arcgis.com/F7QOvKuSY1sCek45/arcgis/rest/services/Property_Map/FeatureServer/2",
+
+            //   //"https://services6.arcgis.com/F7QOvKuSY1sCek45/ArcGIS/rest/services/Property_Map/FeatureServer/1/query?where=Ow_Name+%3D+%27Reshma+sanakal%27&quantizationParameters=&sqlFormat=none&f=pgeojson&token="
+
 
             // });
 
