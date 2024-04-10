@@ -1,0 +1,95 @@
+/* #navBar{
+    padding: 0%;
+    margin: 0%;
+    width: 100%;
+    height: 4%;
+}
+
+#sidebar{
+    left: 10%;
+    padding: 0%;
+    margin: 0%;
+    width: 0%;
+    height: 4%;
+} */
+
+/* #viewDiv {
+    padding: 0%;
+    margin: 0%;
+    width: 100%;
+    height: 100%;
+  } */
+
+  #sidebar{
+    align-items: center;
+    border: 0px black groove;
+  }
+  
+  #select {
+    position: absolute;
+    top: 5%;
+   
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjust the gap between the selects as needed */
+    background-color: wheat;
+    padding: 10px;
+    margin: 20px;
+    transition: all 0.3s ease; /* Optional: add a smooth transition effect */
+    width: 200px;
+  }
+
+ 
+
+  #bufferFunctionality{
+    position: absolute;
+    top: 30%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjust the gap between the selects as needed */
+    background-color: wheat;
+    padding: 10px;
+    margin: 20px;
+    transition: all 0.3s ease; /* Optional: add a smooth transition effect */
+    width: 200px;
+  }
+
+
+  #exportshp{
+    position: absolute;
+    top:60%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px; /* Adjust the gap between the selects as needed */
+    background-color: wheat;
+    padding: 10px;
+    margin: 20px;
+    transition: all 0.3s ease; /* Optional: add a smooth transition effect */
+    width: 200px;
+  }
+  
+  #folder,
+  #Service,
+  #Layer {
+    width: 200px;
+    padding: 5px;
+    margin: 5px;
+  }
+  
+  #refresh {
+    background-color: rgb(139, 216, 94);
+    padding: 2px;
+    /* color: red; */
+  }
+
+  .esri-legend__layer {
+    margin-left: 7px;
+    overflow: auto;
+    text-align: center;
+}
+
+#basemapGalleryButton {
+  position: absolute; 
+  top: 80%;
+  z-index: 1000; 
+}
