@@ -1,37 +1,7 @@
-html, body, #map {
-    height: 100%;
-    padding: 0;
-    margin: 0;
-  }
-
-  /* Change color of icons to match bar chart and selection symbol */
-  .esriPopup.dark div.titleButton, 
-  .esriPopup.dark div.titlePane .title,
-  .esriPopup.dark div.actionsPane .action {
-    color: #dadd08ef;
-  }
-  /* Additional customizations */
-  .esriPopup.dark .esriPopupWrapper {
-    border: none;
-  }
-  .esriPopup .contentPane {
-    text-align: center;
-  }
-  .esriViewPopup .gallery {
-    margin: 0 auto;
-  }
-/* 
-  #map{ 
-    margin: 0; 
-    padding: 0;
-   } */
-   
-  /* #leftPanel {
-    margin:5px;
-    background: #fff;
-    color: #444;
-    font-family: arial;
-    width: 250px;
-    border-right: solid 1px #888;
-  } */
-  
+#mapview{
+    height: 50vh;
+    width: 100wh;
+}
+#fctable{
+    height: 45vh;
+}

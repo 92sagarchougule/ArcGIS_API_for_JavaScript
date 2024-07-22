@@ -1,26 +1,19 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
-    <link rel="stylesheet" href="https://js.arcgis.com/3.44/esri/css/esri.css">
-    <script src="https://js.arcgis.com/3.44/"></script>
-    <script src="./main.js"></script>
-    <link rel="stylesheet" href="./style.css">
-    <title> ArcAPI-JS</title>
-  </head>
-  <body class="claro">
-    <!-- <div data-dojo-type="dijit.layout.BorderContainer"
-       data-dojo-props="design:'headline',gutters:false"
-       style="width: 100%; height: 100%; margin: 0;"> -->
-    <div id="map" data-dojo-type="dijit.layout.ContentPane" data-dojo-props="region:'center'"></div>
-
-    <!-- <div id="leftPane"
-    data-dojo-type="dijit/layout/ContentPane"
-    data-dojo-props="region:'left'">
-    </div> -->
-
-    </div>
-
-  </body>
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArcGIS JS</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://js.arcgis.com/4.30/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.30/"></script>
+    <script type="module" src="https://js.arcgis.com/map-components/4.30/arcgis-map-components.esm.js"></script>
+</head>
+<body>
+    <div id="mapview"></div>
+    <script src="main.js"></script>
+    <div id="fctable"></div>
+      <!-- Load Map Components from CDN-->
+  
+</body>
 </html>
